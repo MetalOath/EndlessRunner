@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroCharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float runSpeed = 8f;
@@ -10,6 +10,7 @@ public class HeroCharacterController : MonoBehaviour
     [SerializeField] private Transform[] groundChecks;
     [SerializeField] private Transform[] wallChecks;
     [SerializeField] private AudioClip jumpSoundEffect;
+    public List<GameObject> platformPatterns;
 
     private float gravity = -50f;
     private CharacterController characterController;
@@ -72,7 +73,10 @@ public class HeroCharacterController : MonoBehaviour
 
         if (!blocked)
         {
-            characterController.Move(new Vector3(horizontalInput * runSpeed, 0, 0) * Time.deltaTime);
+            foreach (GameObject platformPattern in platformPatterns)
+            {
+                platformPattern.transform.Translate(Vector3.left * runSpeed * Time.deltaTime);
+            }
         }
 
         // Jumping
@@ -104,5 +108,20 @@ public class HeroCharacterController : MonoBehaviour
 
         // Set parameter for JumpFall Blend Tree Animation
         animator.SetFloat("VerticalSpeed", velocity.y);
+    }
+
+    public void Jump()
+    {
+        jumpTimer = Time.time;
+
+        if (isGrounded && (jumpTimer > 0 && Time.time < jumpTimer + jumpGracePeriod))
+        {
+            velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+            if (jumpSoundEffect != null)
+            {
+                AudioSource.PlayClipAtPoint(jumpSoundEffect, transform.position, 0.5f);
+            }
+            jumpTimer = -1;
+        }
     }
 }

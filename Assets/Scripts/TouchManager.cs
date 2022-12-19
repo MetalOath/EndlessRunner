@@ -27,5 +27,6 @@ public class TouchManager : MonoBehaviour
     private void Jumped(InputAction.CallbackContext context)
     {
         playerController.Jump();
+        playerController.StartGame();
     }
 }

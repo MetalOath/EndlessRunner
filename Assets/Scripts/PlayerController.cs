@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] groundChecks;
     [SerializeField] private Transform[] wallChecks;
     [SerializeField] private AudioClip jumpSoundEffect;
+    [SerializeField] private GameObject startScreen, deathScreen;
     public List<GameObject> platformPatterns;
 
     private float gravity = -50f;
@@ -22,7 +24,11 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer;
     private float jumpGracePeriod = 0.2f;
 
-    
+    private void Awake()
+    {
+        Time.timeScale = 0;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,5 +129,33 @@ public class PlayerController : MonoBehaviour
             }
             jumpTimer = -1;
         }
+    }
+
+    public void StartGame()
+    {
+        if (startScreen.activeInHierarchy)
+        {
+            startScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Death"))
+        {
+            StartCoroutine(EndGame());
+        }
+    }
+
+    IEnumerator EndGame()
+    {
+        runSpeed = 0;
+        deathScreen.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        Debug.Log("Reloading,..");
+        SceneManager.LoadScene("MainScene");
     }
 }

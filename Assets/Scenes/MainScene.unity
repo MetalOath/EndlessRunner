@@ -1513,6 +1513,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 646410176581227383, guid: 62b6461242992024e90c594236bf7b24, type: 3}
+      propertyPath: coinText
+      value: 
+      objectReference: {fileID: 642469092}
+    - target: {fileID: 646410176581227383, guid: 62b6461242992024e90c594236bf7b24, type: 3}
       propertyPath: runSpeed
       value: 6
       objectReference: {fileID: 0}
@@ -1671,6 +1675,14 @@ PrefabInstance:
     - target: {fileID: 6794301979498407976, guid: cfe0878140722f84681feb800e5ce679, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794301979498407976, guid: cfe0878140722f84681feb800e5ce679, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794301979498407976, guid: cfe0878140722f84681feb800e5ce679, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6794301979498407976, guid: cfe0878140722f84681feb800e5ce679, type: 3}
       propertyPath: m_LocalPosition.x

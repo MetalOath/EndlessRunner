@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] wallChecks;
     [SerializeField] private AudioClip jumpSoundEffect;
     [SerializeField] private GameObject startScreen, deathScreen;
+    [SerializeField] private TextMeshProUGUI coinText;
     public List<GameObject> platformPatterns;
 
     private float gravity = -50f;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private bool jumpPressed;
     private float jumpTimer;
     private float jumpGracePeriod = 0.2f;
+    private int coins = 0;
 
     private void Awake()
     {
@@ -145,6 +148,14 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Death"))
         {
             StartCoroutine(EndGame());
+        }
+
+        if (other.CompareTag("Coin"))
+        {
+            coins++;
+            Destroy(other.gameObject);
+
+            coinText.text = coins + " Coins";
         }
     }
 
